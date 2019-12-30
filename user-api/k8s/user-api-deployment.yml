@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-api-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: user-api
+    spec:
+      containers:
+      - name: user-api
+        image: userapi:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+          name: server-port
+        env:
+          - name: REDIS_URL
+            value: redis-master
+          - name: MONGO_URL
+            value: "mongodb://mongodb-service/feedback"
+          - name: ENVIROMENT
+            value: "development"
+          - name: PORT
+            value: "3000"
+          - name: JAEGER_SERVICE_NAME
+            value: "userapi-service"
+          - name: APP_PROJECT_NAME
+            value: "userapi"
+        # livenessProbe:
+        #   httpGet:
+        #     port: server-port
+        #     path: /health
+        #   initialDelaySeconds: 15
+        #   timeoutSeconds: 30
+        # readinessProbe:
+        #   httpGet:
+        #     port: server-port
+        #     path: /ready
+        #   initialDelaySeconds: 15
+        #   timeoutSeconds: 30
+  selector:
+    matchLabels:
+      app: user-api

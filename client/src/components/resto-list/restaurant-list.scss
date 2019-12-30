@@ -1,0 +1,19 @@
+.restaurant-list-item{
+    display: flex;
+    flex-direction: column;
+    .restaurant-list-img{
+        line-height: 0;
+        transition: all .25s ease-in-out; 
+        img{
+            height: 100%;
+            width: 100%;
+        }
+        &:hover{
+            transform: scale(1.2);
+        }
+    }
+    .restaurant-list-section{
+        height: 100%;
+    }
+}
+

@@ -1,0 +1,50 @@
+@mixin textprop($size,$color) {
+  color: $color;
+  size:$size;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+}
+#main-footer{
+  background: #444;
+  border-top:1px solid #fff ;
+  bottom: 0;
+  width: 100%;
+  .footer-share-section{
+    background: #fff;
+    .nav-item-text{
+      margin: 6px 10px;
+      .nav-link-text{
+        text-decoration: none;
+        border: none !important;
+        color: #111;
+      }
+    }
+    .social-link .nav-item{
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      padding: 6px 10px;
+        .nav-link{
+          padding: 0 2px;
+          @include textprop(16px, #393939);
+          border: none;
+          .ng-fa-icon {
+              width: 20px;
+              height: 20px;
+              font-size: 20px;
+          }
+        }
+    }
+  }
+  .footer-bottom-sec{
+    background: #000;
+    .footer-info{
+      @include textprop(16px, #FFF);
+    }
+    .footer-copyright{
+      @include textprop(13px, #FFF);
+    }
+  }
+}

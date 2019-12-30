@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - name: client
+        image: feedbackclient:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+          name: server-port
+        - containerPort: 443
+        env:
+          - name: USER-API
+            value: user-api-service
+          - name: ORDER-API
+            value: order-api-service
+          - name: SEARCH-API
+            value: search-api-service
+          - name: ADMIN-API
+            value: admin-api-service
+          - name: SHOPPING-CART-API
+            value: shopping-cart-api-service
+  selector:
+    matchLabels:
+      app: client

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: review-api-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: review-api
+    spec:
+      containers:
+      - name: review-api
+        image: reviewapi:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+          name: server-port
+        env:
+          - name: REDIS_URL
+            value: redis-master
+          - name: MONGO_URL
+            value: "mongodb://mongodb-service/feedback"
+          - name: ENVIROMENT
+            value: "development"
+          - name: PORT
+            value: "8000"
+          - name: HOST
+            value: "http://user-api-service.default.svc.cluster.local"
+          - name: JAEGER_SERVICE_NAME
+            value: "review-api-service"
+          - name: APP_PROJECT_NAME
+            value: "review-api"
+        # livenessProbe:
+        #   httpGet:
+        #     port: server-port
+        #     path: /health
+        #   initialDelaySeconds: 15
+        #   timeoutSeconds: 30
+        # readinessProbe:
+        #   httpGet:
+        #     port: server-port
+        #     path: /ready
+        #   initialDelaySeconds: 15
+        #   timeoutSeconds: 30
+  selector:
+    matchLabels:
+      app: review-api
